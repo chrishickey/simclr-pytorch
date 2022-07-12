@@ -1,11 +1,11 @@
-arch: ResNet50
+arch: vit_base_patch16_224
 aug: true
-batch_size: 2048
+batch_size: 128
 ckpt: ''
 color_dist_s: 1.0
 config_file: ''
 data: imagenet
-dist: ddp
+dist: dp
 dist_address: ''
 eval_freq: 12510
 gpu: 0
@@ -30,5 +30,5 @@ tmp: false
 verbose: true
 warmup: 0.1
 weight_decay: 1.0e-06
-workers: 8
+workers: 0
 world_size: 4

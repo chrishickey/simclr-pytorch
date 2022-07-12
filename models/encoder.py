@@ -1,6 +1,7 @@
 import torch
 from torch import nn
 import models
+import timm
 from collections import OrderedDict
 from argparse import Namespace
 import yaml
@@ -16,8 +17,10 @@ class BatchNorm1dNoBias(nn.BatchNorm1d):
 class EncodeProject(nn.Module):
     def __init__(self, hparams):
         super().__init__()
-
-        if hparams.arch == 'ResNet50':
+        if hparams.arch in timm.list_models(pretrained=True):
+            self.convnet = timm.create_model(hparams.arch, pretrained=True, num_classes=0)
+            self.encoder_dim = self.convnet.num_features
+        elif hparams.arch == 'ResNet50':
             cifar_head = (hparams.data == 'cifar')
             self.convnet = models.resnet.ResNet50(cifar_head=cifar_head, hparams=hparams)
             self.encoder_dim = 2048

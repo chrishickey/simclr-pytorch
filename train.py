@@ -241,6 +241,7 @@ def save_checkpoint(path, model, optimizer, cur_iter=None):
     ckpt.update(
         {
             'opt_state_dict': optimizer.state_dict(),
+            'encoder_dict': model.model.module.convnet.state_dict(),
             'iter': cur_iter,
         }
     )
